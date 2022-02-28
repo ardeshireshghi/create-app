@@ -8,14 +8,13 @@ const WebpackConfigManager = require('../services/webpack-config/WebpackConfigMa
 const TemplateInstaller = require('../services/TemplateInstaller');
 
 async function execCreateCommand(newAppName, appType) {
-  const app = new App(newAppName, appType);
-
-  if (app.type === AppTypes.REACT) {
+  if (appType === AppTypes.REACT) {
+    const app = new App(newAppName, appType, 'react');
     const createAppCommand = createFrontEndAppCommand(
       app,
       new ReactAppCreateService(
         new WebpackConfigManager(),
-        new TemplateInstaller()
+        new TemplateInstaller(app.templatePath)
       )
     );
 

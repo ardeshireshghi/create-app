@@ -1,4 +1,3 @@
-// const { spawn, execSync } = require('child_process');
 const os = require('os');
 const { cwd } = require('process');
 const fs = require('fs').promises;
@@ -22,7 +21,7 @@ class ReactAppCreateService extends AppCreateService {
 
     await this._createAppDirectory(name);
     await this._createPackageJson(name);
-    await this.templateInstaller.install('react', path.join(cwd(), name));
+    await this.templateInstaller.install(path.join(cwd(), name));
     await this.webpackConfigManager.createConfig(path.join(cwd(), name));
     await this._installDependencies(name, true);
   }

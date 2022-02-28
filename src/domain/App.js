@@ -4,9 +4,10 @@ const AppTypes = {
 };
 
 class App {
-  constructor(name, type = AppTypes.REACT) {
+  constructor(name, type = AppTypes.REACT, templatePath) {
     this.name = name;
     this.type = type;
+    this.templatePath = templatePath;
   }
 }
 

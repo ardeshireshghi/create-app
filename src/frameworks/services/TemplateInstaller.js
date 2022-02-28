@@ -7,8 +7,11 @@ const BASE_TEMPLATE_PATH = path.resolve(
 );
 
 class TemplateInstaller {
-  async install(templateName, targetPath) {
-    await copy(`${BASE_TEMPLATE_PATH}/${templateName}`, targetPath);
+  constructor(templateName) {
+    this.templateName = templateName;
+  }
+  async install(targetPath) {
+    await copy(`${BASE_TEMPLATE_PATH}/${this.templateName}`, targetPath);
   }
 }
 
