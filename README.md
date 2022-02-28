@@ -47,6 +47,10 @@ src
         └── CreateNextJsApp.js
 ```
 
+### Architecture diagram
+
+![Diagram](assets/create-app-architecture.png)
+
 ### Usage
 
 To create a new app run:
