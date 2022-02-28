@@ -21,9 +21,9 @@ class ReactAppCreateService extends AppCreateService {
     }
 
     await this._createAppDirectory(name);
+    await this._createPackageJson(name);
     await this.templateInstaller.install('react', path.join(cwd(), name));
     await this.webpackConfigManager.createConfig(path.join(cwd(), name));
-    await this._createPackageJson(name);
     await this._installDependencies(name, true);
   }
 
@@ -53,27 +53,23 @@ class ReactAppCreateService extends AppCreateService {
   async _installDependencies(appName, useYarn = true) {
     const packageManager = useYarn ? 'yarnpkg' : 'npm';
 
-    await Promise.all(
-      this.dependencies.map((packageName) =>
-        installPackage({
-          name: packageName,
-          packageManager,
-          workDir: path.join(cwd(), appName),
-          isDev: false
-        })
-      )
-    );
+    for (const packageName of this.dependencies) {
+      await installPackage({
+        name: packageName,
+        packageManager,
+        workDir: path.join(cwd(), appName),
+        isDev: false
+      });
+    }
 
-    await Promise.all(
-      this.devDependencies.map((packageName) =>
-        installPackage({
-          name: packageName,
-          packageManager,
-          workDir: path.join(cwd(), appName),
-          isDev: true
-        })
-      )
-    );
+    for (const packageName of this.devDependencies) {
+      await installPackage({
+        name: packageName,
+        packageManager,
+        workDir: path.join(cwd(), appName),
+        isDev: true
+      });
+    }
   }
 
   _isAppNameValid(name) {
